@@ -1,0 +1,11 @@
+/.idea/*
+.idea/*
+
+nbproject/*
+nbproject/project.properties
+nbproject/project.xml
+
+_recursos/*
+
+cnx.php
+mysql.php

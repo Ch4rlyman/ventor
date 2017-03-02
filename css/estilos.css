@@ -1,0 +1,141 @@
+body>div.container-fluid{
+    padding-top: 65px;
+}
+
+.navbar-fixed-top .navbar-collapse,.navbar-fixed-bottom .navbar-collapse{max-height:480px}
+
+.dataTables_filter label, .dataTables_filter label input {
+    width: 100% !important;
+    margin: 0 !important;
+}
+.dataTables_info{
+    display: inline;
+}
+.dataTables_length select {
+    padding: 0 2px !important;
+    width: auto !important;
+}
+.paginate_button a{
+     padding: 3px 8px !important;
+ }
+
+.btn-refrescar{
+    margin-right: 6px;
+    font-size: .8em !important;
+    padding: 3px 5px 2px 5px;
+}
+.btnSeparated {
+    margin-right: 5px;
+}
+.dt-btn {
+    cursor: pointer;
+    opacity: 0.4;
+}
+.dt-btn:hover {
+    opacity: 1;
+}
+.dt-button{
+    font-size: 14px !important;
+}
+
+/* ------------- */
+.soles:before{
+    display: inline-block;
+    content: "S/";
+    font-size: .75em;
+    margin-right: 7px;
+}
+
+.tituloPag{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 6px;
+}
+.help-block.with-errors ul li{
+    font-size: .85em !important;
+}
+.help-block.with-errors{
+    margin: 4px 0 5px;
+}
+.help-block.with-errors ul{
+    margin: 0;
+}
+.table-responsive{
+    border: none;
+}
+/* ---------------- Widget -----------------*/
+.info-box {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 2px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin-bottom: 15px;
+    min-height: 60px;
+    width: 100%;
+}
+.info-box-icon {
+    display: block;
+    float: left;
+    height: 60px;
+    width: 60px;
+    font-size: 35px;
+    text-align: center;
+    line-height: 70px;
+    color: #aaa;
+
+}
+.info-box-icon.bg-info {
+    color: rgba(83,171,219,.5);
+}
+.info-box-icon.bg-danger {
+    color: rgba(195,74,72,.5);
+}
+.info-box-icon.bg-success {
+    color: rgba(70,136,71,.5);
+}
+.info-box-icon.bg-warning {
+    color: rgba(204,152,83,.5);
+}
+
+.info-box-icon > img {
+    max-width: 100%;
+}
+.info-box-content {
+    padding: 5px 10px;
+    margin-left: 60px;
+}
+.info-box-cantidad {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 15px;
+}
+.info-box-cantidad:after {
+    display: inline-block;
+    content: "|";
+    font-weight: normal;
+    color: #CCC;
+    margin: 0 13px;
+}
+.info-box-number {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 18px;
+}
+.info-box-text {
+    display: block;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.info-box-text {
+    text-transform: uppercase;
+}
+.info-box-more {
+    display: block;
+}
