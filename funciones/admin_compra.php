@@ -19,7 +19,7 @@ switch ($_REQUEST["f"]) {
             $msg = "Error al insertar el registro. Inténtelo luego";
         }
         echo json_encode(array("success" => $ok, "msg" => $msg), JSON_PRETTY_PRINT);
-        break;
+        break;    
     case 3:
         $ac = $oCom->actualizar($_POST);
         if ($ac >0 ){
@@ -40,27 +40,6 @@ switch ($_REQUEST["f"]) {
             $msg = "Error al Eliminar el registro. Inténtelo luego";
         }
         echo json_encode(array("success" => $ok, "msg" => $msg), JSON_PRETTY_PRINT);
-        break;
-    case 10:
-        $data = $oCom->listarSugerencia($_GET["query"]);
-        echo json_encode($data);
-        break;
-    case 20:
-        $id = isset($_GET["id"]) ? $_GET["id"] : "";
-        if(sizeof($oCom->existe("nombre", $_GET["nombre"], $id))==0){
-            http_response_code(200);
-        }else{
-            header("HTTP/1.1 420 La Marca ya existe. Por favor ingreso otra.");
-        }
-        break;
-    case 21:
-        $id = isset($_GET["id"]) ? $_GET["id"] : "";
-        $mar = $oCom->existe("abreviatura", $_GET["abreviatura"], $id);
-        if(sizeof($mar)==0){
-            http_response_code(200);
-        }else{
-            header("HTTP/1.1 420 La Abreviatura ya existe y pertenece a: " . $mar["nombre"] . " Por favor ingreso otra.");
-        }
-        break;
+        break;   
 }
 ?>

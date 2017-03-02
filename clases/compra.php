@@ -158,35 +158,27 @@ class Compra {
         if($this->_misql->numeroAfectados()){
             $idInsertado = $this->_misql->ultimoIdInsertado();
             $this->_misql->ejecutar("UPDATE producto SET stock=stock + ". $data["cantidad"] ." WHERE id = " . $data["producto_id"]);
-        }else
+        }else{
             $idInsertado = 0;
+        }
         $this->_misql->cerrar();
         return $idInsertado;
     }
 
-//    public function actualizar($data) {
-//
-//        $fechaActual = date("Y-m-d H:i:s");
-//        $this->_misql->conectar();
-//        $this->_misql->sql = "UPDATE cliente SET " .
-//            "dni='". $dni ."', " .
-//            "nombres='". $nombres ."', " .
-//            "paterno='". $paterno ."', " .
-//            "materno='". $materno ."', " .
-//            "sexo='". $sexo ."', " .
-//            "ruc='". $ruc ."', " .
-//            "razon_social='". $razon_social ."', " .
-//            "telefono='". $data["telefono"] ."', " .
-//            "direccion='". $data["direccion"] ."', " .
-//            "correo='". $data["correo"] ."', " .
-//            "editor=". $data["id"] .", " .
-//            "edicion_fecha='". $fechaActual ."' ";
-//        $this->_misql->sql .="WHERE id=". $data["id"];
-//        $this->_misql->ejecutar();
-//        $nro = $this->_misql->numeroAfectados();
-//        $this->_misql->cerrar();
-//        return $nro;
-//    }
+    public function actualizar($data) {
+        $fechaActual = date("Y-m-d H:i:s");
+        $this->_misql->conectar();
+        $this->_misql->sql = "UPDATE compra SET " .
+            "precio=". $precio .", " .
+            "proveedor_id=". $proveedor_id .", " .
+            "editor=". $_SESSION["id"] .", " .
+            "edicion_fecha='". $fechaActual ."' ";
+        $this->_misql->sql .="WHERE id=". $data["id"];
+        $this->_misql->ejecutar();
+        $nro = $this->_misql->numeroAfectados();
+        $this->_misql->cerrar();
+        return $nro;
+    }
 
     public function eliminar($id, $eliminarStock = 0) {                  
         $this->_misql->conectar();
@@ -207,19 +199,6 @@ class Compra {
 
         $this->_misql->cerrar();
         return $rs;
-    }
-
-    public function existe($campo, $valor, $idExcluido="") {
-        $exclusion = $idExcluido=="" ? "" : " AND id <>" . $idExcluido;
-        $this->_misql->sql = "SELECT * FROM marca WHERE $campo='" . $valor . "'" . $exclusion;
-        $this->_misql->conectar();
-        $data = $this->_misql->devolverArreglo();
-        if(sizeof($data) > 0){
-            $fila = $data[0];
-        }else
-            $fila = [];
-        $this->_misql->liberarYcerrar();
-        return $fila;
     }
 
     public function listarSugerencia($busqueda) {

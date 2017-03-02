@@ -185,7 +185,7 @@ class Producto {
             "unidad_medida_id=". $data["unidad_medida_id"] .", " .
             "marca_id=". $data["marca_id"] .", " .
             "categoria_id=". $data["categoria_id"] .", " .
-            "editor=". $data["id"] .", " .
+            "editor=". $_SESSION["id"] .", " .
             "edicion_fecha='". $fechaActual ."' ";
         $this->_misql->sql .="WHERE id=". $data["id"];
         $this->_misql->ejecutar();

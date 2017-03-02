@@ -175,7 +175,9 @@ class Proveedor {
             "telefono='". $data["telefono"] ."', " .
             "direccion='". $data["direccion"] ."', " .
             "correo='". $data["correo"] ."', " .
-            "web='". $data["web"] ."' " .
+            "web='". $data["web"] ."', " .
+            "editor=". $_SESSION["id"] .", " .
+            "edicion_fecha='". $fechaActual ."' ";
         $this->_misql->sql .="WHERE id=". $data["id"];
         $this->_misql->ejecutar();
         $nro = $this->_misql->numeroAfectados();

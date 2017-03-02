@@ -1,9 +1,24 @@
-$(function () {
+$(function () { 
+    $("#tbPrecio_com").TouchSpin({
+        verticalbuttons: true,
+        min: 0,
+        max: 99999,
+        step: .1,
+        decimals: 2,
+        prefix: "S/"
+    });
+    
+    $('#tbFecha_com').datepicker({
+        todayBtn: "linked",
+        language: "es",
+        autoclose: true,
+        todayHighlight: true
+    });
+    
     var mCom = $("#mCompra");
     var fCom = $("#fCompra");
 
     var dtCom = $('#dtCompra').DataTable({
-        select: "single",
         processing: true,
         serverSide: true,
         responsive: true,
@@ -19,6 +34,12 @@ $(function () {
                 className: "btn-sm",
                 action: function ( e, dt, node, config ) {
                     $("#tbId").val(0);
+                    
+                    $("#tbProducto_com").prop("readonly",false);
+                    $("#tbCantidad_com").prop("disabled",false)
+                    
+                    $("#tbCantidad_com").TouchSpin({ verticalbuttons: true, max: 99999 });
+                    
                     mCom.find(".modal-title").html("Nueva Compra");
                     mCom.modal('show');
                 }
@@ -53,23 +74,24 @@ $(function () {
         dtCom.ajax.reload(null, false);
     });
 
-    /*
-
     dtCom.on('click', '.dt-btn-editar', function () {
         var fila = dtCom.row($(this).parents('tr')).data();
 
-        $("#tbNombreMarca").attr("data-remote",'funciones/admin_marca.php?f=20&id=' + fila.id);
-        $("#tbAbreviatura").attr("data-remote",'funciones/admin_marca.php?f=21&id=' + fila.id);
-
-        mCom.find(".modal-title").html("Editar Marca");
+        $("#tbCantidad_com").TouchSpin("destroy");
 
         $("#tbId").val(fila.id);
-        $("#tbNombreMarca").val(fila.nombre);
-        $("#tbAbreviatura").val(fila.abreviatura);
-
+        $("#tbProducto_com").val(fila.nombre).prop("readonly",true);
+        $("#tbhProducto_com").val(fila.producto_id);
+        
+        $("#tbCantidad_com").val(fila.cantidad).prop("disabled",true);
+        $("#tbPrecio_com").val(fila.precio);
+        
+        $("#tbProveedor_com").val(fila.razon_social);
+        $("#tbhProveedor_com").val(fila.proveedor_id);
+        
+        mCom.find(".modal-title").html("Editar Compra");
         mCom.modal('show');
     });
-    */
    /*
     $("#btnGuardarMarca").on("click",function(){
         con = $("#fCompra").parents(".modal-content");
@@ -125,12 +147,12 @@ $(function () {
     });
 
     mCom.on('shown.bs.modal', function (e) {
-        $("#tbNombreCantidad").focus();
+        $("#tbProducto_com").focus();
     })
     mCom.on('hidden.bs.modal', function (e) {
         $('#fCompra')[0].reset();
         con = $("#dtCompra").parents(".modal-content");
         con.waitMe('hide');
     })
-
+    
 });

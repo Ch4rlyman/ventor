@@ -208,7 +208,7 @@ class Cliente {
             "telefono='". $data["telefono"] ."', " .
             "direccion='". $data["direccion"] ."', " .
             "correo='". $data["correo"] ."', " .
-            "editor=". $data["id"] .", " .
+            "editor=". $_SESSION["id"] .", " .
             "edicion_fecha='". $fechaActual ."' ";
         $this->_misql->sql .="WHERE id=". $data["id"];
         $this->_misql->ejecutar();
