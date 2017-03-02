@@ -5,6 +5,7 @@
 <html lang="es">
     <head>
         <?php include_once ("sis_css.php") ?>
+        <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css">
         <title>Compras</title>
     </head>
 
@@ -41,87 +42,43 @@
                         <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body">
-                        <style>
-                            @media (min-width: 768px) {
-                                #mCliente .form-group{
-                                    margin-left: 0;
-                                    margin-right: 0;
-                                }
-                            }
-                        </style>
-                        <form id="fCompra" class="form-horizontal" data-toggle="validator">
+                        <form id="fCompra" data-toggle="validator"> 
                             <div class="form-group">
-                                <label for="tbProducto" class="col-sm-2 control-label">Producto</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="tbDniCli" name="dni" maxlength="8" required data-minlength="8" data-minlength-error="El DNI debe tener 8 digitos">
-                                    <div class="help-block with-errors"></div>
-                                </div>
+                                <label for="tbProducto_com" class="control-label">Producto</label>
+                                <input  type="text" class="form-control" id="tbProducto_com" required>
+                                <input type="hidden" id="tbhProducto_com" name="producto_id">
+                                <div class="help-block with-errors"></div>
                             </div>
-                            <div class="form-group">
-                                <label for="tbNombreCli" class="col-sm-2 control-label">Nombres</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="tbNombresCli" name="nombres" maxlength="100" required >
-                                    <div class="help-block with-errors"></div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="tbCantidad_com">Cantidad</label>
+                                        <input type="text" class="form-control" id="tbCantidad_com" name="cantidad" required pattern="^[1-9][0-9]*$" data-pattern-error="Debe ser mayor a cero" >
+                                        <input type="hidden" id="tbId" name="id">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="fila">
-                                <label for="tbPaternoCli" class="col-sm-2 control-label">Apellidos</label>
-                                <div class="col-sm-10">
-                                    <div class="row">
-                                        <div class="form-group col-sm-6">
-                                            <input type="text" id="tbPaternoCli" name="paterno" class="form-control" placeholder="Paterno" required>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="form-group col-sm-6">
-                                            <input type="text" id="tbMaternoCli" name="materno" class="form-control" placeholder="Materno" required>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="tbPrecio_com">Precio</label>
+                                        <input type="text" class="form-control" id="tbPrecio_com" name="precio" required min="0" value="0">
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="rbSexo" class="col-sm-2 control-label">Sexo</label>
-                                <div class="col-sm-10">
-                                    <label class="radio-inline" for="rbMasculinoCli">
-                                        <input type="radio" id="rbMasculinoCli" name="sexo" value="M" checked="checked"> Masculino
-                                    </label>
-                                    <label class="radio-inline" for="rbFemeninoCli">
-                                        <input type="radio" id="rbFemeninoCli" name="sexo" value="F"> Femenino
-                                    </label>
-                                </div>
+                                <label for="tbProveedor_com" class="control-label">Proveedor</label>
+                                <input  type="text" class="form-control" id="tbProveedor_com" required>
+                                <input type="hidden" id="tbhProveedor_com" name="proveedor_id">
+                                <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group">
-                                <label for="tbRucCli" class="col-sm-2 control-label">RUC</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="tbRucCli" name="ruc" maxlength="11" required data-minlength="11" data-minlength-error="El RUC debe tener 11 digitos">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="tbRazonSocCli" class="col-sm-2 control-label">Razón Social</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="tbRazonSocCli" name="razon_social" maxlength="250" required >
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="tbDireccionCli" class="col-sm-2 control-label">Teléfono</label>
-                                <div class="col-sm-5">
-                                    <input type="text" id="tbTelefonoCli" name="telefono" class="form-control">
-                                    <input type="hidden" class="form-control" id="tbId" name="id">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="tbDireccionCli" class="col-sm-2 control-label">Dirección</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="tbDireccionCli" name="direccion" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="tbDCorreoCli" class="col-sm-2 control-label">Correo</label>
-                                <div class="col-sm-10">
-                                    <input type="email" id="tbCorreoCli" name="correo" class="form-control">
-                                    <div class="help-block with-errors"></div>
+                                <label for="tbFecha_com" class="control-label">Fecha</label>
+                                <!--<input  type="text" class="form-control" id="tbFecha_com" style="width: 120px;">-->
+
+                                <div class="input-group date" style="width: 160px;">
+                                    <input type="text" class="form-control" id="tbFecha_com">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div>
                             </div>
                         </form>
@@ -141,6 +98,8 @@
         </div>
 
         <?php $dataTable = true; include_once "sis_js.php" ?>
+        <script src="js/bootstrap-datepicker.min.js"></script>
+        <script src="js/bootstrap-datepicker.es.min.js"></script>
 
         <script src="js/compras.js"></script>
     </body>
