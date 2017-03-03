@@ -53,6 +53,11 @@ body>div.container-fluid{
     text-align: center;
 }
 
+.btn-quitar{
+    padding: 0 3px; 
+    font-size: 0.7em;
+}
+
 .form-group {
     margin-bottom: 6px;
 }

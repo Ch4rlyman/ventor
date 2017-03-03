@@ -17,6 +17,9 @@ $(function () {
     
     var mCom = $("#mCompra");
     var fCom = $("#fCompra");
+    
+    var mPro = $("#mProducto");
+    var fPro = $("#fProducto");
 
     var dtCom = $('#dtCompra').DataTable({
         processing: true,
@@ -55,13 +58,11 @@ $(function () {
         }],
         columns: [
             { "data": "id", "visible": false},
-            { "data": "codigo" },
-            { "data": "nombre" },
-            { "data": "cantidad" },
-            { "data": "precio" },
-            { "data": "razon_social" },
+            { "data": "tipo_documento" },
+            { "data": "proveedor" },
             { "data": "fecha" },
-            { "data": "producto_id", "visible": false},
+            { "data": "monto" },
+            { "data": "tipo_documento_id", "visible": false},
             { "data": "proveedor_id", "visible": false},
             { "data": null, "orderable": false}
         ],
@@ -147,11 +148,23 @@ $(function () {
     });
 
     mCom.on('shown.bs.modal', function (e) {
-        $("#tbProducto_com").focus();
+        console.log("foco al combo");
+        $("#cbTipoDocumento_com").focus();
     })
     mCom.on('hidden.bs.modal', function (e) {
+        console.log("cerrar");
         $('#fCompra')[0].reset();
-        con = $("#dtCompra").parents(".modal-content");
+        con = $("#fCompra").parents(".modal-content");
+        con.waitMe('hide');
+    })
+    
+    mPro.on('shown.bs.modal', function (e) {
+        console.log("foco al producto");
+        $("#tbProducto_com").focus();
+    })
+    mPro.on('hidden.bs.modal', function (e) {
+        $('#fProducto')[0].reset();
+        con = $("#fProducto").parents(".modal-content");
         con.waitMe('hide');
     })
     

@@ -170,6 +170,7 @@ class Compra {
         $this->_misql->conectar();
         $this->_misql->sql = "UPDATE compra SET " .
             "precio=". $precio .", " .
+            "fecha='". $fecha ."', " .
             "proveedor_id=". $proveedor_id .", " .
             "editor=". $_SESSION["id"] .", " .
             "edicion_fecha='". $fechaActual ."' ";
@@ -199,13 +200,6 @@ class Compra {
 
         $this->_misql->cerrar();
         return $rs;
-    }
-
-    public function listarSugerencia($busqueda) {
-        $this->_misql->conectar();
-        $this->_misql->sql = "SELECT id, nombre FROM marca WHERE nombre like '%". $busqueda ."%' ORDER BY nombre LIMIT 10";
-        $data = $this->_misql->devolverArreglo();
-        return $data;
     }
 }
 ?>
