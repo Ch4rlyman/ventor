@@ -217,7 +217,7 @@ class Producto {
 
     public function listarSugerencia($busqueda) {
         $this->_misql->conectar();
-        $this->_misql->sql = "SELECT id, nombre, codigo FROM producto WHERE nombre like '%". $busqueda ."%' nombre like '%". $busqueda ."%' or  codigo like '%". $busqueda ."%' ORDER BY nombre LIMIT 10";
+        $this->_misql->sql = "SELECT id, nombre, codigo FROM producto WHERE nombre like '%". $busqueda ."%' or  codigo like '%". $busqueda ."%' ORDER BY nombre LIMIT 10";
         $data = $this->_misql->devolverArreglo();
         return $data;
     }

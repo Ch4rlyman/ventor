@@ -15,10 +15,6 @@
         <div class="container-fluid">
             <div class="well well-sm tituloPag">Compras</div>
             
-            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#mCompra" style="padding: 2px 5px; margin-bottom: 6px">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ventana
-                                </button> 
-            
             <div class="row">
                 <div class="col-md-7">
                     <table id="dtCompra" class="table table-condensed table-hover" width="100%" cellspacing="0">
@@ -29,6 +25,8 @@
                             <th>Proveedor</th>
                             <th>Fecha</th>
                             <th>Total</th>
+                            <th>id_td</th>
+                            <th>id_p</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -36,7 +34,7 @@
                     </table>
                 </div>
                 <div class="col-md-5">
-                    <table id="dtCompra" class="table table-condensed table-hover" width="100%" cellspacing="0">
+                    <table id="dtCompraDetalle" class="table table-condensed table-hover" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>id</th>
@@ -69,9 +67,6 @@
                                     <div class="form-group">
                                         <label for="cbTipoDocumento_com">Tipo Documento</label>                                        
                                         <select class="form-control" id="cbTipoDocumento_com" name="tipo_documento_id">
-                                            <option>Ticket</option>
-                                            <option>Boleta de Venta</option>
-                                            <option>Factura</option>
                                         </select>
                                     </div>
                                 </div>
@@ -107,13 +102,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="well text-center" style="font-size: 0.85em; padding: 7px; margin-bottom: 0">
-                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#mProducto" style="padding: 2px 5px; margin-bottom: 6px">
+                            <div class="well text-center" style="font-size: 0.85em; padding: 7px 4px 5px 4px; margin: 6px 0 0 0">
+                                <button id="btnAgregarProducto" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#mProducto" style="padding: 2px 5px; margin-bottom: 6px">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Producto
                                 </button> 
                                 
                                 <div class="table-responsive">
-                                    <table id="dtCompra" class="table table-condensed table-bordered table-hover" width="100%" cellspacing="0" style="background-color: #FFF; margin-bottom: 0">
+                                    <table id="tDetalle" class="table table-condensed table-bordered table-hover" width="100%" cellspacing="0" style="background-color: #FFF; margin-bottom: 0">
                                         <thead>
                                             <tr>
                                                 <th style="width: 40px; text-align: center">Cant</th>
@@ -123,30 +118,16 @@
                                                 <th style="width: 40px;"></th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align: center">10</td>
-                                                <td style="text-align: left">Lapiz Rojo Faber Castell</td>
-                                                <td style="text-align: right">1.10</td>
-                                                <td style="text-align: right">11.00</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-quitar">
-                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center">10</td>
-                                                <td style="text-align: left">Lapiz Rojo Faber Castell</td>
-                                                <td style="text-align: right">1.10</td>
-                                                <td style="text-align: right">11.00</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-quitar">
-                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                        <tbody>                                            
                                         </tbody>
+                                        <tfoot>
+                                            <tr style='font-weight: bold'>
+                                                <td colspan="2"></td>
+                                                <td style="text-align: center">TOTAL</td>
+                                                <td style="text-align: right" id='totalCompra'>0.00</td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>                 
@@ -212,7 +193,7 @@
                                 <button type="reset" class="btn btn-default" data-dismiss="modal" tabindex="-1">Cancelar</button>
                             </div>
                             <div class="col-xs-6">
-                                <button type="button" id="btnGuardarCliente" class="btn btn-primary">Guardar</button>
+                                <button type="button" id="btnAgregarProductoDetalle" class="btn btn-success">Agregar Producto</button>
                             </div>
                         </div>
                     </div>

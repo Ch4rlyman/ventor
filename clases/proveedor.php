@@ -205,5 +205,12 @@ class Proveedor {
         $this->_misql->liberarYcerrar();
         return $fila;
     }
+    
+    public function listarSugerencia($busqueda) {
+        $this->_misql->conectar();
+        $this->_misql->sql = "SELECT id, razon_social FROM proveedor WHERE razon_social like '%". $busqueda ."%' ORDER BY razon_social LIMIT 10";
+        $data = $this->_misql->devolverArreglo();
+        return $data;
+    }
 
 }

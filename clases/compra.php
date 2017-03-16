@@ -19,7 +19,7 @@ class Compra {
 
         extract($postData);
         
-        $aColumns = array('id', 'codigo', 'nombre','cantidad','precio','razon_social','fecha','producto_id','proveedor_id');
+        $aColumns = array('id', 'documento', 'razon_social','fecha','total','tipo_documento_id','proveedor_id');
         $sIndexColumn = 'id';
         $sTable = 'v_compra';
 

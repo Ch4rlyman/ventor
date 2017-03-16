@@ -39,6 +39,10 @@ switch ($_REQUEST["f"]) {
         }
         echo json_encode(array("success" => $ok, "msg" => $msg), JSON_PRETTY_PRINT);
         break;
+    case 10:
+        $data = $oPro->listarSugerencia($_GET["query"]);
+        echo json_encode($data);
+        break;
     case 20:
         $id = isset($_GET["id"]) ? $_GET["id"] : "";
         if(sizeof($oPro->existe("codigo", $_GET["codigo"], $id))==0){
