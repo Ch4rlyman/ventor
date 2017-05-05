@@ -38,16 +38,24 @@
                         <thead>
                         <tr>
                             <th>id</th>
-                            <th>Cantidad</th>
-                            <th>producto_id</th>
-                            <!--<th>Cod Prod</th>-->
+                            <th>Cant.</th>
                             <th>Producto</th>
                             <th>Precio</th>
                             <th>Sub Total</th>
+                            <th>Stock</th>
+                            <th>idp</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody></tbody>
+                        <tfoot style="font-weight: bold">
+                            <tr>                                
+                                <td colspan="3"></td>
+                                <td>TOTAL</td>
+                                <td></td>                                
+                                <td colspan="3"></td>                                
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -73,19 +81,22 @@
                                 <div class="col-xs-6 col-sm-2">
                                     <div class="form-group">
                                         <label for="tbSerie_com">Serie</label>
-                                        <input type="text" class="form-control" id="tbSerie_com" name="serie">                                        
+                                        <input type="text" class="form-control" id="tbSerie_com" name="serie" required>                                        
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
                                     <div class="form-group">
                                         <label for="tbNumero_com">Número</label>
-                                        <input type="text" class="form-control" id="tbNumero_com" name="numero">                                        
+                                        <input type="text" class="form-control" id="tbNumero_com" name="numero" required>                                        
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="tbFecha_com" class="control-label">Fecha</label>
-                                        <input type="text" class="form-control" id="tbFecha_com" name="fecha">                           
+                                        <input type="text" class="form-control" id="tbFecha_com" name="fecha" required>                           
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                             </div>                                                        
@@ -102,7 +113,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="well text-center" style="font-size: 0.85em; padding: 7px 4px 5px 4px; margin: 6px 0 0 0">
+                            <div id="cProductos" class="well text-center" style="font-size: 0.85em; padding: 7px 4px 5px 4px; margin: 6px 0 0 0">
                                 <button id="btnAgregarProducto" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#mProducto" style="padding: 2px 5px; margin-bottom: 6px">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Producto
                                 </button> 
@@ -130,7 +141,8 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                            </div>                 
+                            </div>
+                            <span id="error-cProductos" class="text-danger" style="font-size: 0.9em; display: none" >Agrege por lo menos un producto a su compra.</span>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -139,7 +151,7 @@
                                 <button type="reset" class="btn btn-default" data-dismiss="modal" tabindex="-1">Cancelar</button>
                             </div>
                             <div class="col-xs-6">
-                                <button type="button" id="btnGuardarCliente" class="btn btn-primary">Guardar</button>
+                                <button type="button" id="btnGuardarCompra" class="btn btn-primary">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -200,12 +212,39 @@
                 </div>
             </div>
         </div>
+        
+        <div id="mCompraDetalle" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="fCompraDetalle" data-toggle="validator">                            
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+                                <button type="reset" class="btn btn-default" data-dismiss="modal" tabindex="-1">Cancelar</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" id="btnGuardarDetalle" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <?php $dataTable = true; include_once "sis_js.php" ?>
         <script src="js/bootstrap-datepicker.min.js"></script>
         <script src="js/bootstrap-datepicker.es.min.js"></script>
         <script src="js/bootstrap-contextmenu.js"></script>
 
+        <!--<script src="fnFilterAll.js"></script>-->
         <script src="js/compras.js"></script>
     </body>
 </html>

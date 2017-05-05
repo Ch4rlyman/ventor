@@ -2,8 +2,8 @@
 
 //session_start();
 extract($_POST);
-include_once '../clases/compra.php';
-$oCom = new Compra();
+include_once '../clases/compradetalle.php';
+$oCom = new CompraDetalle();
 
 switch ($_REQUEST["f"]) {
     case 1:

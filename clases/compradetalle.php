@@ -4,7 +4,7 @@ require_once("cnx.php");
 date_default_timezone_set("America/Lima");
 mb_internal_encoding('UTF-8');
 
-class Compra {
+class CompraDetalle {
     private $_misql;
 
     public function __construct() {
@@ -19,9 +19,9 @@ class Compra {
 
         extract($postData);
         
-        $aColumns = array('id', 'documento', 'razon_social','fecha','total','tipo_documento_id','proveedor_id');
+        $aColumns = array('id', 'cantidad', 'nombre', 'precio', 'subtotal', 'stock','producto_id');
         $sIndexColumn = 'id';
-        $sTable = 'v_compra';
+        $sTable = 'v_compradetalle';
 
         $gaSql['user']     = $bd_usuario;
         $gaSql['password'] = $bd_clave;

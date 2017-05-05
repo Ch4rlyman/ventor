@@ -26,7 +26,7 @@ $(function () {
                     $("#tbProducto_com").prop("readonly",false);
                     $("#tbCantidad_com").prop("disabled",false)
                     
-                    $("#tbCantidad_com").TouchSpin({ verticalbuttons: true, max: 99999 });
+                    $("#tbCantidad_com").TouchSpin({ verticalbuttons: true, max: 99999 });                                       
                     
                     mCom.find(".modal-title").html("Nueva Compra");
                     mCom.modal('show');
@@ -53,13 +53,42 @@ $(function () {
         ],
         order: [[0, "desc"]]
     });
-/*
+
     $("#tbR").css("display","inline").html('<button type="button" class="btn btn-default btn-sm btn-refrescar" ><span class="glyphicon glyphicon-refresh" id="btnRefrescar"></span>');
 
     $("#tbR").on('click', '.btn-refrescar', function () {
         dtCom.ajax.reload(null, false);
     });
 
+    $("#btnGuardarCompra").on("click",function(){
+        con = $("#fCompra").parents(".modal-content");
+        
+        errores = $("#fCompra").validator('validate').has('.has-error').length;
+        if (!errores) {
+            ProdOK = validarProductos();
+            if (ProdOK){
+                con.waitMe({ text : 'Guardando...' });
+    //            var data = fCom.serializeArray();
+    //            data.push({name: 'f', value: $("#tbId").val()==0 ? 2 :3 });
+    //
+    //            $.post("funciones/admin_marca.php", data, function(d) {
+    //                if (!d.success) {
+    //                    swal({title: d.msg, type: "error"});
+    //                }
+    //                else {
+    //                    toastr["success"](d.msg);
+    //                    mCom.modal('hide');
+    //                    dtCom.ajax.reload();
+    //                }
+    //                con.waitMe('hide');
+    //            },'json');
+            }
+            
+            
+        }
+    });
+  
+/*
     dtCom.on('click', '.dt-btn-editar', function () {
         var fila = dtCom.row($(this).parents('tr')).data();
 
@@ -78,66 +107,36 @@ $(function () {
         mCom.find(".modal-title").html("Editar Compra");
         mCom.modal('show');
     });
-  
-    $("#btnGuardarMarca").on("click",function(){
-        con = $("#fCompra").parents(".modal-content");
-
-        errores = $("#fCompra").validator('validate').has('.has-error').length;
-
-        if (!errores) {
-            con.waitMe({ text : 'Guardando...' });
-
-            var data = fCom.serializeArray();
-            data.push({name: 'f', value: $("#tbId").val()==0 ? 2 :3 });
-
-            $.post("funciones/admin_marca.php", data, function(d) {
-                if (!d.success) {
-                    swal({title: d.msg, type: "error"});
-                }
-                else {
-                    toastr["success"](d.msg);
-                    mCom.modal('hide');
-                    dtCom.ajax.reload();
-                }
-                con.waitMe('hide');
-            },'json');
-        }
-    });
-  
-
+*/    
     dtCom.on('click', '.dt-btn-eliminar', function () {
-        contenedorTabla = $('#dtCompra').parents(".dataTables_wrapper");
+        con = $('#dtCompra').parents(".dataTables_wrapper");
 
         var da = dtCom.row($(this).parents('tr')).data();
-        bootbox.confirm("¿Seguro que desea eliminar el registro de <b>" + da.nombre + "</b>?", function(rpta){
-            if(rpta){
-                var delStock = 0;
-                bootbox.confirm("¿También quiere eliminar el Stock(<b>" + da.cantidad + "</b>) ingresado del Producto?", function(rpta2){
-                    if(rpta2){
-                        delStock = 1;
+        bootbox.confirm("¿Seguro que desea eliminar el registro <b>" + da.documento + "</b>?", function(rpta){
+            if(rpta){                
+                con.waitMe({ text: 'Eliminando...' });
+                $.post("funciones/admin_compra.php", {"f": 4, id: da.id }, function(d){
+                    if(!d.success){
+                        toastr["error"](d.msg);
+                    }else{
+                        toastr["success"](d.msg);
+                        dtCom.ajax.reload();
                     }
-                    
-                    contenedorTabla.waitMe({ text: 'Eliminando...' });
-                    $.post("funciones/admin_compra.php", {"f": 4, id: da.id , es: delStock}, function(d){
-                        if(!d.success){
-                            toastr["error"](d.msg);
-                        }else{
-                            toastr["success"](d.msg);
-                            dtCom.ajax.reload();
-                        }
-                        contenedorTabla.waitMe('hide');
-                    },"json");
-                });
+                    con.waitMe('hide');
+                },"json");
             }
         });
     });
-*/
+
     mCom.on('shown.bs.modal', function (e) {
         $("#cbTipoDocumento_com").focus();
         $("#tbFecha_com").val(fechaActual());
     })
     mCom.on('hidden.bs.modal', function (e) {
         $('#fCompra')[0].reset();
+        $("#tDetalle tbody").html("");
+        $("#totalCompra").html("0.00");
+                
         con = $("#fCompra").parents(".modal-content");
         con.waitMe('hide');
     })
@@ -197,22 +196,9 @@ $(function () {
             e.preventDefault();
             $("#btnAgregarProductoDetalle").trigger("click");
         }
-    })    
+    })          
     
-    $("#tDetalle tbody").on("click", ".btn-quitar",function(){
-        var fila = $(this).parents("tr");
-        var total = parseFloat($("#totalCompra").html()) - parseFloat(fila.find(".dSubTotal").html());
-        fila.remove();
-        $("#totalCompra").html(total.toFixed(2));
-    });
-    
-    $("#btnAgregarProductoDetalle").on("click", function(){
-//        var total = 0;
-//        $("#tDetalle tbody tr").each(function (index) {
-//            total += parseFloat($(this).find(".dSubTotal").html());
-//        });
-       
-
+    $("#btnAgregarProductoDetalle").on("click", function(){    
         if( parseFloat($("#tbPrecio_com").val()) == 0){
             toastr["error"]("El Precio del Producto no puede ser Cero.", function(){
                 $("#tbPrecio_com").focus().select();
@@ -234,16 +220,123 @@ $(function () {
 
                 var total = parseFloat($("#totalCompra").html()) + subTotal;
                 $("#totalCompra").html(total.toFixed(2));
+                
+                validarProductos();
 
                 mPro.modal('hide');
                 $("#btnAgregarProducto").focus();
             }
-            
         }
+    });
+    
+    $("#tDetalle tbody").on("click", ".btn-quitar",function(){
+        var fila = $(this).parents("tr");
+        var total = parseFloat($("#totalCompra").html()) - parseFloat(fila.find(".dSubTotal").html());
+        fila.remove();
+        $("#totalCompra").html(total.toFixed(2));
+        
+        validarProductos();
+    });
+    
+    
+    // ------------------------- DETALLE COMPRA --------------------------------
+    jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
+	return this.flatten().reduce( function ( a, b ) {
+		if ( typeof a === 'string' ) {
+			a = a.replace(/[^\d.-]/g, '') * 1;
+		}
+		if ( typeof b === 'string' ) {
+			b = b.replace(/[^\d.-]/g, '') * 1;
+		}
+
+		return a + b;
+	}, 0 );
+    } );
+    
+    
+    
+    var mComDet = $("#mCompraDetalle");
+    var fComDet = $("#fCompraDetalle");
+    
+    var dtComDet = $('#dtCompraDetalle').DataTable({
+//        select: "single",
+        processing: true,
+        serverSide: true,
+        responsive: true,
+//        lengthMenu: [ [15, 25, 50, 100, -1], [15, 25, 50, 100, "Todo"] ],
+        paging: false,
+        ajax:{
+            url :"funciones/admin_compradetalle.php?f=1",
+            type: "post"
+        },
+        "dom": "<'row text-sm'<'col-xs-6'B><'col-xs-6 text-right'f>>t<'row text-sm'<'col-xs-6 col-sm-4'<'#tbRD'>i><'col-xs-6 col-sm-4 text-center'l><'col-xs-12 col-sm-4 text-right'p>>",
+        buttons: [
+            {
+                text: "<span class='glyphicon glyphicon-plus'></span> Agregar Producto",
+                className: "btn-sm",
+                action: function ( e, dt, node, config ) {
+//                    $("#tbId").val(0);
+                    
+                    mComDet.find(".modal-title").html("Nuevo Producto");
+                    mComDet.modal('show');
+                }
+            }
+        ],
+        columnDefs: [{
+            targets: -1,
+            data: null,
+            defaultContent: "<span class='glyphicon glyphicon-pencil dt-btn dt-btn-editar'></span> &nbsp;<span class='glyphicon glyphicon-trash dt-btn dt-btn-eliminar'></span>",
+            className: "text-center",
+            responsivePriority: -1,
+            width: "40px",
+        }],
+        columns: [
+            { "data": "id", "visible": false},
+            { "data": "cantidad", render: function ( data){return parseFloat(data).toFixed(2);}, className: "text-center"},
+            { "data": "nombre" },
+            { "data": "precio", "render": function ( data){return parseFloat(data).toFixed(2);}, "className": "text-center" },
+            { "data": "subtotal", "render": function ( data){return parseFloat(data).toFixed(2);}, "className": "text-right" },
+            { "data": "stock", "render": function ( data){return '<span class="text-info">'+ parseFloat(data).toFixed(2) +'</span>';}, "className": "text-center" },
+            { "data": "producto_id", "visible": false},
+            { "data": null, "orderable": false}
+        ],
+        order: [[0, "desc"]],
+//        drawCallback: function () {
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+//            var api = this.api();
+            colSum = 4;
+                        
+            total = parseFloat(api.column(colSum).data().reduce(function (total, b){ return total + parseFloat(b); }, 0)).toFixed(2);
+            totalPagina = parseFloat(api.column(colSum, {page: 'current', order:'current'}).data().reduce(function (total, b){ return total + parseFloat(b); }, 0)).toFixed(2);
+            
+            
+            totales = (total == totalPagina) ? totalPagina : totalPagina + " (Total : " + total + ")";
+            
+            $(api.column(colSum).footer()).html(totales);
+        }
+    });
+
+    $("#tbRD").css("display","inline").html('<button type="button" class="btn btn-default btn-sm btn-refrescar" ><span class="glyphicon glyphicon-refresh" id="btnRefrescar"></span>');
+
+    $("#tbRD").on('click', '.btn-refrescar', function () {
+        dtComDet.ajax.reload(null, false);
     });
     
     
     //=============================== FUNCIONES ================================
+    
+    validarProductos = function(){
+        if ($("#tDetalle tbody tr").length == 0){
+            $("#cProductos").removeClass("well").addClass("bg-danger");
+            $("#error-cProductos").show();
+            return false;
+        }else{
+            $("#cProductos").removeClass("bg-danger").addClass("well");
+            $("#error-cProductos").hide();
+            return true;
+        }
+    }
     
     zeroFill = function(num, width) {
         return String((new Array(width+1)).join('0') + num).slice(-width);
@@ -252,5 +345,7 @@ $(function () {
     fechaActual = function(){
         var f=new Date();
         return zeroFill(f.getDate(),2) + "/" + zeroFill(f.getMonth() + 1,2) + "/" + f.getFullYear();
-    }
+    }   
+    
+    
 });
